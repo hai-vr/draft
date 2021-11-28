@@ -1,6 +1,6 @@
 # This is a draft
 
-[sub-draft](/sub-draft/index.md)
+[sub-draft](sub-draft/index.md)
 
 ## Welcome to GitHub Pages
 
