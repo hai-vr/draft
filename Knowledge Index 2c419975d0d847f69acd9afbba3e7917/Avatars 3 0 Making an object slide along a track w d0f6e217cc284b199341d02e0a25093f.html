@@ -1,0 +1,657 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Avatars 3.0: Making an object slide along a track with Constraint Track Animations</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d0f6e217-cc28-4b19-9341-d02e0a25093f" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🛤️</span></div><h1 class="page-title">Avatars 3.0: Making an object slide along a track with Constraint Track Animations</h1></header><div class="page-body"><p id="092ac1f6-f606-4b1a-8df2-c25316d757dc" class="block-color-orange_background">This page is a work in progress, and is incomplete.</p><h2 id="ca0f79ac-405b-46f7-bb60-1d56a6ecf5fd" class="">Warning, this is really hard</h2><p id="dbf42752-7ac6-49ba-a72f-640f8f68c608" class="">Constraint Track Animations is an advanced esoteric topic, and requires you to be comfortable with the following subjects:</p><ul id="c6977be8-d6da-4bea-93d1-4e05e2e20134" class="bulleted-list"><li style="list-style-type:disc">Avatars 3.0</li></ul><ul id="7fce7021-d453-4989-bfe6-ca0bb6961fe8" class="bulleted-list"><li style="list-style-type:disc">Animations</li></ul><ul id="c3c07fc9-5e1a-4d5e-b239-5e9f310a796f" class="bulleted-list"><li style="list-style-type:disc">Constraints</li></ul><ul id="7f2b62d3-b79c-4d8b-b01b-44c3ae3500fd" class="bulleted-list"><li style="list-style-type:disc">Modeling</li></ul><ul id="4ce34874-7ba6-4b7b-a949-5a930cd24053" class="bulleted-list"><li style="list-style-type:disc">Vertex groups</li></ul><p id="577176c9-e8ba-4acd-ae10-ccc8a63ff972" class="">The following subjects are recommended:</p><ul id="22b6b8ea-b1ba-4d55-a342-658a73ce87ba" class="bulleted-list"><li style="list-style-type:disc">Programming in C# and Editor Scripting</li></ul><ul id="518dafea-ca16-4498-8340-c53a9b6f94bc" class="bulleted-list"><li style="list-style-type:disc">Animated Animator Parameters</li></ul><p id="2c3e81ba-ef4d-43b7-9795-ec33fe1ed45f" class="">Creating Constraint Tracks require a lot of patience and doing a lot of mistakes. I cannot recommend creating constraint tracks unless you&#x27;re obsessed about the subject.</p><h2 id="62506f45-f3f0-45c9-8d69-a17e991cc54c" class="">I don&#x27;t do most of this by hand</h2><p id="22b20965-adfc-405a-ac4d-536ea3dec44c" class="">This page describes the fundamentals of how it works. However, most of what I describe is something that I&#x27;ve streamlined by automating most of their creation. This automation is a result of learning from my past mistakes, because doing this manually is <strong>painful</strong> and I learned it the hard way.</p><p id="a1e96c09-0810-409e-b4ad-32cbcd6c1c1c" class="">I really, cannot recommend anyone doing this by hand. Maybe, just once on a simple track to get the basics working.</p><h2 id="1579b3cd-7a60-4bad-bcdc-a7f78a311b9e" class="">Constraint Tracks moves a single object/bone along a track</h2><p id="e35cd540-0e38-4758-8fcf-4c79cf3e7c10" class="">A constraint track is a Parent Constraint that allows a bone to move along a track.</p><p id="9b849e5f-4394-49a9-aea2-6ac3c7255de3" class="">The Parent Constraint, once setup, looks typically like this:</p><figure id="70dc752b-d0de-46e5-b4e6-2f18df7b3ee3" class="image"><a href="Avatars%203%200%20Making%20an%20object%20slide%20along%20a%20track%20w%20d0f6e217cc284b199341d02e0a25093f/sx_2021-12-05_14-37-30_gqIA6oMYVu.gif"><img style="width:455px" src="Avatars%203%200%20Making%20an%20object%20slide%20along%20a%20track%20w%20d0f6e217cc284b199341d02e0a25093f/sx_2021-12-05_14-37-30_gqIA6oMYVu.gif"/></a></figure><p id="a5e9be05-d3a1-446c-b244-0a04666197d6" class="block-color-blue_background">This is an animated GIF.</p><p id="dc2ddb23-f8b4-4d17-892d-1516bf91edeb" class="">This Parent constraint has weights. These weights can be animated by an animation.</p><p id="7bff74cc-0ecd-4171-ae74-ac3b834039e4" class="">The weights looks like this in the animation:</p><figure id="33330903-e232-42a0-bb1b-4a4f7b53d6bb" class="image"><a href="Avatars%203%200%20Making%20an%20object%20slide%20along%20a%20track%20w%20d0f6e217cc284b199341d02e0a25093f/Untitled.png"><img style="width:1272px" src="Avatars%203%200%20Making%20an%20object%20slide%20along%20a%20track%20w%20d0f6e217cc284b199341d02e0a25093f/Untitled.png"/></a></figure><p id="33cc7ea5-102f-4dce-9492-ea7e23a2444d" class="">This animation describes that only two constraints are active at a time, and the sum of the weights of all constraints is always equal to 1.</p><p id="2871a5eb-c8a9-4d2d-b025-82d4ddf11a4f" class="">The resulting effect is that the parent constraint is being linearly interpolated between each transform of the track. Since this is a parent constraint, the position and rotation are linearly interpolated.</p><h2 id="c47aa1dd-1649-4dbe-9e8a-f64ea7a7be1b" class="">The track is made of objects parented to other bones, and not necessarily the same ones</h2><p id="e4c219d1-d8e7-488e-a8d7-f0401ce3c6ad" class="">A main attraction of constraint tracks is the ability to re-parent a bone from a piece of apparel to a neighboring bone that was not designed for it.</p><p id="1ce8bfeb-6bf9-4630-a309-1f88e5bba271" class="">For instance, the Wrist part of a piece of apparel can move along the lower arm instead of the hand wrist.</p><p id="2b9b46fb-b362-4686-b8cd-31ff5140e4d9" class="">That same wrist part can then move along the upper arm instead of the hand wrist.</p><p id="9e4cede8-514f-4704-afba-f9fec386fb54" class="">Therefore, you can make the Wrist part move from the hand wrist, to the lower arm, to the upper arm. The obtained effect here is pulling the sleeves.</p><p id="1197d6e1-175e-4c72-a614-236239496b72" class="">This is different from blendshapes, because blendshapes will not help get you get rid of the movement influence from the original bone; the wrist in this case.</p><h2 id="b91376f3-fa79-4763-b31c-b2940f9a4390" class="">Creating a constraint track is tedious if not created through automation</h2><p id="2dc9bd65-94ca-43ab-b26f-cbc5064cb7e5" class="">Creating a constraint track is tedious, because you may need to do numerous adjustments in the path, the timing, the animation, etc.</p><p id="94589d37-a444-49f9-b3f5-559cf8d136e0" class="">Therefore it is not advisable to create a constraint track without the help of an automation tool.</p><p id="0649417b-e781-4952-9ddd-176c0d062174" class="">In addition, this is a gimmick that requires a sizable amount of constraints. Constraints are fast, but after a critical number of active constraints are present in the scene, there will be a significant CPU performance dip.</p><p id="4b1110d4-abc4-4bb8-b77e-e02d6beb9cde" class="">For this reason, it is important to disable unused constraints. A constraint track only has 2 track points active at one time, so if the track points themselves uses constraints, the other unused track points can be disabled. Disabling constraints adds another painful step to the animation process.</p><h2 id="797e2f95-2287-413e-9689-97c14c8373cc" class="">The apparel model needs to be modified to detach from the standard Humanoid</h2><p id="58ab8df1-81b6-47c9-9a40-79e831b50425" class="">In order to make apparel model use Constraint Tracks, they need to be modified so that the standard Humanoid bones are no longer used by the apparel.</p><p id="d42211dd-50d5-426b-b571-8053afd6f0ff" class="">Rather than having a separate armature, we remap the apparel bones to be children of the respective bones of the Humanoid armature. This is done so that constraints are not needed if the gimmick has never run. It also allows to overcome some execution order issues related to constraints.</p><p id="6068bbc0-449f-4785-94c2-c641b04b1b96" class="">This is done the following way, using Blender:</p><ul id="e881f2f2-d7d9-4c51-9fa0-5dc3a3910e15" class="bulleted-list"><li style="list-style-type:disc">Let&#x27;s take the &quot;Hand&quot; for example, for a Hoodie piece of apparel.</li></ul><ul id="b4521b03-c205-4f33-8bae-4258533bb4bd" class="bulleted-list"><li style="list-style-type:disc">In the Hoodie mesh, the vertex group &quot;Hand&quot; needs to be changed to something else, like &quot;Z_Hand_Hoodie.&quot;
+The &quot;Z_&quot; in the name here is to prevent a possible drifting issue in IK, and also to influence the bone into being exported as the last bone of the hierarchy. Having these non-Humanoid bones as the first bone of the hierarchy can cause issues.</li></ul><ul id="cbb55323-0624-47ba-9710-7bc189b563d7" class="bulleted-list"><li style="list-style-type:disc">Edit the Armature.</li></ul><ul id="318c7ae9-2b10-4110-88dc-bc41352ffc38" class="bulleted-list"><li style="list-style-type:disc">Duplicate the &quot;Hand&quot; bone. By default, the new name of the bone will be &quot;Hand.001&quot;</li></ul><ul id="39c45e3d-296e-4927-8f36-d008d4581ed2" class="bulleted-list"><li style="list-style-type:disc">Rename the new bone &quot;Hand.001&quot; to be &quot;Z_Hand_Hoodie&quot;</li></ul><ul id="bbee8f90-e70c-4bd7-8c81-7fa7015a5de8" class="bulleted-list"><li style="list-style-type:disc">Set the parent of the &quot;Z_Hand_Hoodie&quot; to be the &quot;Hand&quot; bone.</li></ul><h2 id="f3a629cc-1d25-4be0-8565-8a38bf216fa3" class="">Use a neutral object to represent the initial position of the object being animated</h2><p id="f90f4ad5-09c7-45af-9b6f-12690f949b18" class="">If you&#x27;re animating a piece on the apparel that isn&#x27;t at the center of the bone itself, such as a zipper of a Hoodie, then the first constraint of the path (initially weighted at 1) should be a neutral transform representing the center of that thing (the zipper in this case).</p><p id="02e348ec-4b23-4eee-b618-68260946dfdd" class="">This will allow you to define the points of the track in a more sensible way.</p><h2 id="1010f9ea-d839-41d4-b0e5-fc300075969f" class="">The apparel bones follow another bone</h2><p id="7a055f32-6f04-4221-a9b7-54b83a7dc354" class="">Don&#x27;t create the Constraint Track directly on the apparel bones; instead, use a Parent Constraint on the apparel bone, and assign the source to be the Constraint Track.</p><p id="8b0874d2-a793-46ec-bd86-0d5d35d2b7af" class="">The Constraint Track can be at an offset, and the offset is often the neutral object described earlier.</p></div></article></body></html>

@@ -1,0 +1,656 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Avatars</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="27b50349-acbe-46c6-914a-502a7795c966" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🤹</span></div><h1 class="page-title">Avatars</h1></header><div class="page-body"><nav id="1fcc3097-3ef3-4b86-bb60-124dfe9e5b5e" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6b0b1caa-953e-4c58-896d-ab1d678d947f">Animations cannot animate the blendshapes used by the Avatar Descriptor Eye Look blendshapes</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#72573339-4987-4a70-b1b2-2b8b0694e300">Visemes will not function if any animation animates them</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0116029c-f0b2-4bd7-8e23-5900bdaa4ad2">Proxy animations cannot be modified</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#acfbed28-09bf-4aeb-b597-dbb2351f7921">Use a Position Constraint to fix Cloth components spazzing out of control</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6d1723c9-0180-41fe-9d7c-5ab6e0a30ff4">Make sure all SkinnedMeshRenderers have the same Bounds and an Anchor Override so that the avatar is shaded uniformly</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6c9ca78f-c87b-4fab-a060-bd0a789b0868">Testing that change will not be accurate in mirrors when looking at yourself</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1aaefc25-02d9-418e-afc9-fa394755e8b0">Use EditorOnly to exclude things on your avatar</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#518efbdc-a214-4c06-8dea-794237ecc42a">Disabling mouth tracking stops updating the Viseme parameter</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#485da368-457d-46f3-bccd-96a79f6db339">Disabling finger tracking <em>does not</em> stop updating the Gesture parameters</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#456765ae-fc88-4c70-bd48-e8ea27a2920c">Cycle Offset does nothing</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0cb36bb8-8d9e-471d-ab10-d6f0c2212201">Using an animation to change the 5th material of a mesh will cause a glitch</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2e388aae-eb32-4ce3-bb42-433aa45f7b11">When using avatar masks, any animation that swaps materials of a renderer needs to have its transform allowed in the mash</a></div></nav><h2 id="6b0b1caa-953e-4c58-896d-ab1d678d947f" class="">Animations cannot animate the blendshapes used by the Avatar Descriptor Eye Look blendshapes</h2><p id="b75222e5-b5b8-4cfa-b16b-e6ef118b0e76" class="">If you cannot animate the eyes closing, check that you are not using that blendshape as the Blink Blendshape inside the Avatar&#x27;s Eye Tracking settings.<div class="indented"><figure id="f3db2539-f3e8-4d0f-b96e-1a30c089d898" class="image"><a href="Avatars%2027b50349acbe46c6914a502a7795c966/Untitled.png"><img style="width:395px" src="Avatars%2027b50349acbe46c6914a502a7795c966/Untitled.png"/></a></figure></div></p><p id="ad25f7e8-2254-4bc7-8695-c0d71ef0f0d1" class="">Many avatar bases have a blendshape to close the left eye and the right eye independently. If applicable, you can try animating them both instead in your animation.</p><p id="867d13ed-94d3-4c4d-948e-1b967f7d9206" class="">Note that disabling eye tracking will let you animate the Blink blendshape, but I discourage doing it because changing eye from Animation to Tracking is instantaneous and will not result in a smooth transition.</p><h2 id="72573339-4987-4a70-b1b2-2b8b0694e300" class="">Visemes will not function if any animation animates them</h2><p id="58dee157-67fc-449e-978f-99431ca13f6e" class="">Viseme animations when speaking will not work if there is any animation that animates the visemes.</p><p id="b5c77ba8-482c-4366-ba83-5de0ee4f58b1" class="">Viseme animation blendshapes should not be used for face expression animations.</p><h2 id="0116029c-f0b2-4bd7-8e23-5900bdaa4ad2" class="">Proxy animations cannot be modified</h2><p id="a0c19449-524c-4baf-a9b1-93e99001f572" class="">If you cannot animate a locomotion pose animation (i.e. Idle animation) or an action post animation (i.e. AFK animation), check that you are not modifying a proxy animation. Proxy animations usually have a name that start with <code>proxy_</code>.</p><p id="ac1760be-49b5-4a6d-85a6-651476e6481c" class="">If you are, duplicate that animation, and re-assign it within your animator.</p><p id="08b46494-3da3-422f-bfe2-ddfe72260a7f" class="">The only purpose of proxy animations is to tell VRChat to replace it with a real animation when the avatar loads.</p><h2 id="acfbed28-09bf-4aeb-b597-dbb2351f7921" class="">Use a Position Constraint to fix Cloth components spazzing out of control</h2><p id="9aeea3f0-f04b-4968-9969-336c741fb919" class="">The avatar&#x27;s root position will sometime drift away from the actual center of the player as time goes by. This can cause an issue where slightly turning your head would cause the cloth to glitch out of control, as if it was spinning fast.</p><p id="e3abdeb7-9a68-497c-8aee-fe812f713df6" class="">Add a Position Constraint on your Cloth, and constraint it to the Hip bone of your avatar. This should alleviate the issue.</p><h2 id="6d1723c9-0180-41fe-9d7c-5ab6e0a30ff4" class="">Make sure all SkinnedMeshRenderers have the same Bounds and an Anchor Override so that the avatar is shaded uniformly</h2><p id="62b34f84-1942-49c9-9653-6158bbc88867" class="">If your avatar has multiple SkinnedMeshRenderers, you need to make sure the Bounds of all SkinnedMeshRenderers are the same.</p><p id="5bfe4659-565b-47bc-9ae0-dd85b001f6d9" class="">In addition, assign an Anchor Override to all meshes of your avatar. You can set the Anchor Override to be a GameObject parented to the Chest or the Hip of your avatar.</p><figure id="87804159-4008-4abe-93ad-6c2b9b0d9763" class="image"><a href="Avatars%2027b50349acbe46c6914a502a7795c966/Untitled%201.png"><img style="width:928px" src="Avatars%2027b50349acbe46c6914a502a7795c966/Untitled%201.png"/></a></figure><p id="7421eb02-ff0c-4531-aff6-50e97e319346" class="">The Bounds serve two purposes:</p><ul id="d491acb8-6e51-42a5-badc-9e06ffb52925" class="bulleted-list"><li style="list-style-type:disc">The light probe will be correctly sampled from the same location for all skinned meshes. That way, the shading style of the head will not look different from the shading style of the body.</li></ul><ul id="48193412-0d7c-45e6-9bf0-dfa08642e694" class="bulleted-list"><li style="list-style-type:disc">When the avatar is at the edge of the vision of the VR headset from the point of view of other players, the mesh will not suddenly disappear while still in view, nor disappear at a different moment than other parts of the mesh.</li></ul><p id="431bee01-c4ba-4041-bb9f-fdf97ceb0e4e" class="">If a SkinnedMeshRenderer is a Cloth component, you cannot edit its Bounds. Leave them as is.</p><p id="1acd8228-d8d6-43d2-a446-cbed5d160a48" class="">The Anchor Override makes sure that the Reflection Probe that is being sampled is the same for the entire avatar, which can affect the shading style.</p><h3 id="6c9ca78f-c87b-4fab-a060-bd0a789b0868" class="">Testing that change will not be accurate in mirrors when looking at yourself</h3><p id="10b5d05b-b4f7-410c-bb9a-f218ae649bc6" class="">When testing, you need to ignore the mirror because the avatar will look different when you look at yourself in the mirror locally, than when other people will look at you.</p><p id="96c03e39-6d23-41a8-9ace-b631b47fa77c" class="">Ask friends for help, or connect to VRChat using two different accounts at the same time (this is allowed by VRChat, and is a very common practice among world and avatar creators).</p><p id="56f3c23c-3d3b-41a6-9dd9-62b66dcee41c" class="">To connect using two different accounts, see:</p><h2 id="1aaefc25-02d9-418e-afc9-fa394755e8b0" class="">Use EditorOnly to exclude things on your avatar</h2><p id="281ac654-1705-451c-bfa9-6331ac06b5c0" class="">Objects that are tagged as EditorOnly will not be included in your avatar when it builds.</p><p id="3cfed612-6547-449a-9ebb-93141766b2cb" class="">This includes the avatar performance ranking.</p><p id="5b8a6375-93fc-4aa5-803a-fee4fa0fd143" class="">The performance ranking in the build window may look different from when the avatar is inspected in-game.</p><figure id="dd7a873a-4d17-4b03-b44a-43e14a754028" class="image"><a href="Avatars%2027b50349acbe46c6914a502a7795c966/Untitled%202.png"><img style="width:443px" src="Avatars%2027b50349acbe46c6914a502a7795c966/Untitled%202.png"/></a></figure><h2 id="518efbdc-a214-4c06-8dea-794237ecc42a" class="">Disabling mouth tracking stops updating the Viseme parameter</h2><p id="6720e2ff-4eba-4bc2-a44f-f652a41653c2" class="">If you disable mouth tracking, the Viseme parameter will no longer update.</p><h2 id="485da368-457d-46f3-bccd-96a79f6db339" class="">Disabling finger tracking <em>does not</em> stop updating the Gesture parameters</h2><p id="b2504601-b654-4fd2-86b9-661c636b6589" class="">If you disable finger tracking, the Gesture parameters <strong>will</strong> continue to update.</p><p id="19ed36be-ea50-47dd-a5f9-4e08d454bec1" class="">This is useful to continue detecting hand gestures while still playing hand animations.</p><h2 id="456765ae-fc88-4c70-bd48-e8ea27a2920c" class="">Cycle Offset does nothing</h2><p id="3ec48cb3-8aa4-454f-92a1-0c17d4fc4637" class="">After trying to tinker with Cycle Offset, we have concluded that it effectively does nothing, at least in Unity 2019. This contradicts the documentation about it.</p><p id="7ee99922-7df7-4d40-8e9e-d28ba3b928ca" class="">If you are using Cycle Offset to actually do something that works, please contact us, we want to know.</p><h2 id="0cb36bb8-8d9e-471d-ab10-d6f0c2212201" class="">Using an animation to change the 5th material of a mesh will cause a glitch</h2><p id="c1f9cd96-f3a0-4ee9-88e4-331f261e254c" class="">Assuming a mesh has 5 materials, numbered &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot; in this order:</p><p id="7dea8a38-7982-436c-ac1c-ba0657d44df7" class="">If you try to do a material swap by animating the material numbered &quot;5&quot;, the material number &quot;3&quot; will also change due to a Unity bug.</p><h2 id="2e388aae-eb32-4ce3-bb42-433aa45f7b11" class="">When using avatar masks, any animation that swaps materials of a renderer needs to have its transform allowed in the mash</h2><p id="0fffcf29-3ea2-4bb9-83ff-f66fc54898f5" class="">If you use avatar masks, and you have animations that swaps the material of any renderer (Mesh, Skinned Mesh, Trail, etc.), you need to allow the transform of the renderer in your avatar mask.</p><p id="e2a21937-884e-41ed-9b74-6e6503a47d67" class="">You don&#x27;t need to allow any of its parents in the hierarchy.</p></div></article></body></html>

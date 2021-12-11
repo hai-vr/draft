@@ -1,0 +1,690 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Udon and UdonSharp</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b1c493d6-3db1-454c-a071-ae5261426fe4" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🍜</span></div><h1 class="page-title">Udon and UdonSharp</h1></header><div class="page-body"><nav id="8045162c-812a-49aa-91f3-567fc902b785" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4201d741-870e-48ef-aee4-24e94dee93da">UdonSharp - Make a Field editable but not accessible</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#92cdddf7-1b5d-4cf6-8bc5-684c747a3a86">UdonSharp - Make a Field accessible but not editable</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1067659b-cdeb-4011-ba72-7b1c8945d1e0">UdonSharp - Be more productive by editing and recompiling UdonSharp without refreshing the entire project</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3332470d-2ca7-4d71-96e4-9134e8a78f1b">Use SyncMode.None whenever possible</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#740661d8-0a99-4dd8-9853-c0eaccf1a580">Execution Order is not respected on nested UdonBehaviours</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3f8af6df-1b5d-4895-9f3c-98b67dccbd71">The fixed timestep in FixedUpdate() depends on the HMD&#x27;s refresh rate</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#52422561-c5a0-4def-8799-529124a27240">Read a RenderTexture of a Camera</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ef34f5bb-d762-40c3-8ae8-07da255bec22">Calling Interact on another UdonBehaviour</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#49572094-eaee-4559-abc0-6245c9f2d315">Use AlignRoomWithSpawnPoint to teleport the player without making them turn</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b37828dd-a529-43f5-96b4-f38e18dd8a22">Networking.IsInstanceOwner has no effect</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#582d293f-63b7-4c4c-af9d-b87c2c9b5e8e">Attach data to a Player using Player Object Pools</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6519c5ca-922a-4bbf-81c0-1b90e49a6f85">UdonSharp - Invoking a method on a UdonBehaviour that crashed will return the last returned object, which can hide the real error and mislead you</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2efbfc64-821b-4198-8968-4d7e8ead31e3">Play an event almost simultaneously for all players by syncing a Networking.GetServerTimeInMilliseconds() in the future</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2032eb0d-a549-47b4-84a4-dc846df366dc">InputJump will not fire when the Quick Menu is open</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f0f30f34-9400-45f7-b730-d7783a498a68">OnPlayerLeft player is invalid, but can still access some information with it</a></div></nav><h2 id="4201d741-870e-48ef-aee4-24e94dee93da" class="">UdonSharp - Make a Field editable but not accessible</h2><p id="09888877-77d7-44c2-83b6-566687c7041d" class="">If a field needs to be editable on the Inspector but not accessed by other UdonBehaviours, declare it <code>[SerializeField] private</code></p><pre id="2c56a89a-b483-405a-9286-95ab78756be7" class="code"><code>[SerializeField] private Vector3 YourField;</code></pre><p id="450598dd-5561-4f8d-91d2-e075ce3457cf" class="">Internally, this is still considered to be a public variable, so it can be modified with editor scripts and Get/Set public variable. You won&#x27;t be able to access it via a field access from other UdonSharp scripts, which is the point.</p><h2 id="92cdddf7-1b5d-4cf6-8bc5-684c747a3a86" class="">UdonSharp - Make a Field accessible but not editable</h2><p id="358efb4e-ef33-49f1-9d56-3c03bab26376" class="">If a field needs to be accessed by other UdonBehaviours but not editable on the inspector, declare it <code>[NonSerialized] public</code></p><pre id="c8542d39-5aff-4bc5-9fb6-a1942b692afb" class="code"><code>[NonSerialized] public Vector3 YourField;</code></pre><p id="e43e9700-565b-4a76-b029-f48d02ef66d7" class="">This is different to <code>[HideInInspector]</code> in that it may not have an unexpected value if its value was ever serialized into the UdonBehaviour.
+This will not show up in the Inspector when debugging in Play mode.</p><h2 id="1067659b-cdeb-4011-ba72-7b1c8945d1e0" class="">UdonSharp - Be more productive by editing and recompiling UdonSharp without refreshing the entire project</h2><p id="29dc01b2-301e-4db1-9f68-cec4c970b563" class="">If you disable auto-refresh on the project, UdonSharp can still manage to recompile modified UdonSharp files automatically without requiring the entire project to be refreshed.</p><p id="a5cf404b-6c46-4d8d-b22e-7cd6c0e22045" class=""><strong>In order to refresh the project manually, press CTRL-R. </strong>You will need to do this if you add files to your project, or edit existing assets such as textures. You don&#x27;t need to do this if you only edited the contents of a UdonSharp script; the Udon program will be recompiled.</p><p id="01739704-0537-46b4-b162-0035c8e8dce5" class="">In &quot;Editor &gt; Preferences &gt; General&quot;:</p><ul id="e2230007-b307-4ba0-a75f-148cbbace266" class="bulleted-list"><li style="list-style-type:disc">Uncheck &quot;Auto-Refresh&quot;.</li></ul><ul id="0f32c549-9a23-4b61-b356-1286d39057a2" class="bulleted-list"><li style="list-style-type:disc">In &quot;Script Changes While Playing&quot;, switch to &quot;Recompile After Finished Playing&quot;.</li></ul><p id="a46b8b76-24cc-41e8-a998-20043ad1f98a" class="">This modification will affect all of your projects, not just this one.</p><figure id="80cfc44b-9a4f-4f7f-93a7-55657fd1040b" class="image"><a href="Udon%20and%20UdonSharp%20b1c493d63db1454ca071ae5261426fe4/Untitled.png"><img style="width:702px" src="Udon%20and%20UdonSharp%20b1c493d63db1454ca071ae5261426fe4/Untitled.png"/></a></figure><p id="2fce74f0-2255-47fc-89c5-e0c4732098f2" class="">A small caveat is that some newly added Attributes will not be visible by Editor Scripts.</p><h2 id="3332470d-2ca7-4d71-96e4-9134e8a78f1b" class="">Use SyncMode.None whenever possible</h2><p id="069cdd20-5049-4535-9b49-b137b47d3869" class="">If there is a very high number (think 500) of UdonBehaviours with SyncMode set anything other than None, the owner of the objects may not be able to send manual synchronizations for several seconds after a player joins.</p><p id="05c5b7da-6bfb-4f5a-990d-ee51e849908c" class="">Setting SyncMode.None could reduce load times because these objects are no longer networked.</p><p id="fb0d98ad-96f3-489b-9750-848ea3956be2" class="">You can set SyncMode.None if all the following are true:<div class="indented"><ul id="0657428b-e61d-486c-a56a-426ab30d4db6" class="bulleted-list"><li style="list-style-type:disc">Ownership is not used on that behaviour (SetOwner/GetOwner), including by other behaviours.</li></ul><ul id="bef73fc4-5f4b-4e60-a484-b12ada755717" class="bulleted-list"><li style="list-style-type:disc">There are no Custom network events.</li></ul><ul id="1334f3c5-8b92-46ad-b43a-02f137bf5c3e" class="bulleted-list"><li style="list-style-type:disc">There are no Synced Variables.</li></ul></div></p><h2 id="740661d8-0a99-4dd8-9853-c0eaccf1a580" class="">Execution Order is not respected on nested UdonBehaviours</h2><p id="7d32606b-7efa-44e5-b90c-68992e9114ac" class="">Execution order is not respected on UdonBehaviours that are nested with other UdonBehaviours in the hierarchy.</p><h2 id="3f8af6df-1b5d-4895-9f3c-98b67dccbd71" class="">The fixed timestep in FixedUpdate() depends on the HMD&#x27;s refresh rate</h2><p id="6cca5bcf-691e-4abd-847f-b59a63a3e6ec" class="">The fixed timestep in <code>FixedUpdate()</code> is not a constant across players.</p><p id="fc74ff34-f2c7-4456-89c1-54aef2727514" class="">It depends on the HMD&#x27;s refresh rate.</p><p id="31861272-9558-425d-8bc9-972006328c30" class="">Make sure you take the actual time step into account, and not assume a specific value.</p><p id="fc8d6cf0-dbde-4e9a-b132-619bb3b2b375" class="">This also means the physics simulation of Rigidbody objects is likely going to be different for all players.</p><h2 id="52422561-c5a0-4def-8799-529124a27240" class="">Read a RenderTexture of a Camera</h2><p id="07a6ee08-6243-4cb8-b4d0-c4db29fe867f" class="">To read a RenderTexture of a Camera, attach a UdonBehaviour on the same object that holds the Camera component, and implement <code>OnPostRender()</code></p><pre id="014350e6-c4b5-45ad-b34a-ccafaab3062a" class="code"><code>public class CameraReader : UdonSharpBehaviour
+{
+    [SerializeField] private Texture2D buffer;
+    [SerializeField] private Rect rect;
+    [PublicAPI] public float[] Output;
+
+    private void Start()
+    {
+        Output = new float[5];
+    }
+
+    private void OnPostRender()
+    {
+        // The first pixel is the bottom left
+        buffer.ReadPixels(rect, 0, 0, false);
+        buffer.Apply(false);
+
+        var pixels = buffer.GetPixels();
+        Output[0] = pixels[0].r;
+        Output[1] = pixels[1].r;
+        Output[2] = pixels[2].r;
+        Output[3] = pixels[3].r;
+        Output[4] = pixels[4].r;
+    }
+}</code></pre><p id="f9806b04-3792-4dc8-8958-6926c0567a01" class="">The first pixel returned by <code>GetPixels()</code> is at the <strong>bottom</strong> left.</p><p id="9ca2d2bb-0514-45ed-8df5-449f58be8f2c" class="">You may need to generate the <code>Texture2D</code> asset on your own using an editor script. General textures assets from files will not work; they cannot be written into.</p><h2 id="ef34f5bb-d762-40c3-8ae8-07da255bec22" class="">Calling Interact on another UdonBehaviour</h2><p id="03823f22-d558-46f5-bf6d-c329c0771111" class="">If for any reason you need to call the <code>Interact()</code> function of a UdonBehaviour from another UdonBehaviour (i.e. call Lura&#x27;s Switch buttons without modifying Lura&#x27;s Switch source code), manually call the <code>_interact</code> Custom Event on that behaviour:</p><pre id="b4ce3cf6-3699-49c7-9f75-937007f3ee45" class="code"><code>behaviour.SendCustomEvent(&quot;_interact&quot;)</code></pre><p id="b5d8163e-b656-4ff4-a5f1-01028c92dc31" class="">The same may be true for other events, a underscore <code>_</code> followed by a lowercase letter of the event.</p><h2 id="49572094-eaee-4559-abc0-6245c9f2d315" class="">Use AlignRoomWithSpawnPoint to teleport the player without making them turn</h2><p id="1d905ff6-76c3-4661-99a8-db695ef33b27" class="">When the player is looking up or down with their head tilted, it is likely that the cardinal direction of their body will not match the cardinal direction of their head.</p><p id="75501f44-67d3-48da-8389-39c58dae4ccc" class="">This can cause some issues when teleporting. If done every frame, this can cause the player to spin out of control.</p><p id="78e090e9-dcaf-4388-add1-5f87b467783f" class="">This can be alleviated by teleporting using the player&#x27;s tracking origin (play space) as a reference instead.</p><pre id="e9246f6e-a086-4b01-99bd-3a05d64b8c82" class="code"><code>void _TeleportTo(Vector3 destination)
+{
+    var origin = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Origin);
+    var relativePos = origin.position - Networking.LocalPlayer.GetPosition();
+    Networking.LocalPlayer.TeleportTo(destination + relativePos, origin.rotation, VRC_SceneDescriptor.SpawnOrientation.AlignRoomWithSpawnPoint);
+}</code></pre><h2 id="b37828dd-a529-43f5-96b4-f38e18dd8a22" class="">Networking.IsInstanceOwner has no effect</h2><p id="2d2aa6e7-0a91-4a7c-9e17-6a9c63b26adf" class="">Networking.IsInstanceOwner was meant to return true if the player is the person who has created the instance (and they may not be present in the instance). This is different from the notion of instance master.</p><p id="bacf4997-eb24-466e-93e5-5bda23cb1fab" class="">However, this currently has no effect. <strong>You must not use it.</strong></p><p id="51741197-bebc-418e-9f39-acb90c7a8e45" class="">See: <a href="https://feedback.vrchat.com/bug-reports/p/networkingisinstanceowner-true-for-all-users">https://feedback.vrchat.com/bug-reports/p/networkingisinstanceowner-true-for-all-users</a></p><h2 id="582d293f-63b7-4c4c-af9d-b87c2c9b5e8e" class="">Attach data to a Player using Player Object Pools</h2><p id="46036142-8d44-41c8-9091-8eadab3a96b6" class="">In order to let the player have additional networked information (i.e. <em>Player Score, Player Health</em>), and emit events (i.e. <em>The player has killed another player</em>), you need to sort-of create a behavior that represents the player.</p><p id="12b162e7-2801-4042-a938-ff9b7aacbadf" class="">Let&#x27;s say you want to support 20 players. There are two popular ways to achieve this:</p><ul id="23da6bfc-e445-47e8-96f6-b296d8dfc716" class="bulleted-list"><li style="list-style-type:disc">The first option is to create 20 objects. The player must click a button to participate. The player will gain ownership of exactly one of the objects. They can only have one object activated at any time, and will be able to use this object to broadcast their state.
+Remember that all networked objects must have an Owner, so a player will necessarily own multiple of these objects, so treat <em>Ownership</em> and <em>the activated object</em> as different notions.</li></ul><ul id="88747b67-f6b2-4365-bb26-0e3a3f2cb504" class="bulleted-list"><li style="list-style-type:disc">The second option is to use an automatically managed pool of 20 objects. The 20 objects will be automatically be assigned to players as they join and leave the world.
+This is challenging to create, so you should probably not create your own. Use an existing implementation.
+Nowadays, I will recommend <em>CyanPlayerObjectPool</em> by CyanLaser which is a more robust solution to the popular <em>SimplePlayerObjectPool</em> by Phasedragon which I will no longer recommend but served well.
+See: <a href="https://github.com/CyanLaser/CyanPlayerObjectPool/">https://github.com/CyanLaser/CyanPlayerObjectPool/</a></li></ul><h2 id="6519c5ca-922a-4bbf-81c0-1b90e49a6f85" class="">UdonSharp - Invoking a method on a UdonBehaviour that crashed will return the last returned object, which can hide the real error and mislead you</h2><p id="1b6e8a09-6d29-43df-826d-6bbef6d99a35" class="">If a UdonBehaviour has crashed, calling a method that returns an object on that UdonBehaviour could return the last returned object. This can deviously create additional errors that are just the result of cascading effect.</p><p id="cf107bb8-2d46-4af8-9650-8d516b4979b4" class="">For example, if a method returns a list of current players in the instance, calling that method again while it is crashed will return the same list, which may contain players that have left the instance.</p><p id="d95b1675-6b69-4829-9209-f66062fb2695" class="">In this case, the correct fix would have been to identify and resolve the cause of the crash; not to handle invalid players.</p><h2 id="2efbfc64-821b-4198-8968-4d7e8ead31e3" class="">Play an event almost simultaneously for all players by syncing a Networking.GetServerTimeInMilliseconds() in the future</h2><p id="ea74a67a-7965-43c2-a3f0-83e20b684341" class="">If you get the value for <code>Networking.GetServerTimeInMilliseconds()</code> + some delay in the future, and sync it, you can use it to trigger an event almost simultaneously for all players by orders of 10s of milliseconds, even with players across the world.</p><p id="64cd36f8-c511-4bfc-a94e-c2b21138f713" class="">My world VRWare uses this.</p><h2 id="2032eb0d-a549-47b4-84a4-dc846df366dc" class="">InputJump will not fire when the Quick Menu is open</h2><p id="560ae93b-3da3-4a60-afa1-8795d2e326d9" class="">InputJump will not fire when the Quick Menu is open.</p><p id="09bb20b2-8e0b-4206-b55a-a260ae4af0cc" class="">This is intentional.</p><p id="9b72076d-aa2f-45ce-8c77-1794358c511a" class="">See: <a href="https://vrchat.canny.io/vrchat-udon-closed-alpha-bugs/p/1134-inputjump-does-not-fire-while-quick-menu-is-open">https://vrchat.canny.io/vrchat-udon-closed-alpha-bugs/p/1134-inputjump-does-not-fire-while-quick-menu-is-open</a></p><h2 id="f0f30f34-9400-45f7-b730-d7783a498a68" class="">OnPlayerLeft player is invalid, but can still access some information with it</h2><p id="8b571cb9-b1a9-4c41-ae0d-4d2c6f70b197" class="">The player provided in OnPlayerLeft is invalid, it will not pass a <code>Utilities.IsValid</code> call.</p><p id="41bd284b-8fb3-499b-8859-d488c6c284c8" class="">However, some information can still be derived from it.</p><ul id="77079238-826c-440d-b8db-3b9a85539ddd" class="bulleted-list"><li style="list-style-type:disc">You can get the leaving player name.</li></ul><ul id="26e8eac6-f158-495c-b6e1-488abd4cbd5e" class="bulleted-list"><li style="list-style-type:disc">You can detect if the Local Player is leaving by checking if it is equal to <code>Networking.LocalPlayer</code> which can be used for playing a sound, or some more curious things like resetting the world skybox to the original material so that the VRChat loading screen doesn&#x27;t become pink.</li></ul></div></article></body></html>
